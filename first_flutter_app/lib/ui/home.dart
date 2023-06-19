@@ -32,7 +32,7 @@ class MovieListView extends StatelessWidget {
         title: Text("Movies"),
         backgroundColor: Colors.blueGrey.shade900,
       ),
-      backgroundColor: Colors.blueGrey.shade400,
+      backgroundColor: Colors.blueGrey.shade900,
       body: ListView.builder(
           itemCount: movieList.length,
           itemBuilder: (BuildContext context, int index) {
@@ -87,26 +87,53 @@ class MovieListView extends StatelessWidget {
             color: Colors.black45,
             child: Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 54.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(movie.title),
-                      Text("Rating: ${movie.imdbRating} / 10"),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text("Released: ${movie.released}"),
-                      Text(movie.runtime),
-                      Text(movie.rated),
-                    ],
-                  )
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            movie.title,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "Rating: ${movie.imdbRating} / 10",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "Released: ${movie.released}",
+                          style: mainTextStyle(),
+                        ),
+                        Text(
+                          movie.runtime,
+                          style: mainTextStyle(),
+                        ),
+                        Text(
+                          movie.rated,
+                          style: mainTextStyle(),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             )),
       ),
@@ -120,6 +147,10 @@ class MovieListView extends StatelessWidget {
                     )));
       },
     );
+  }
+
+  TextStyle mainTextStyle() {
+    return TextStyle(fontSize: 15.0, color: Colors.grey);
   }
 
   Widget movieImage(String imageUrl) {
@@ -154,16 +185,55 @@ class MovieListViewDetails extends StatelessWidget {
         title: Text("Movies"),
         backgroundColor: Colors.blueGrey.shade900,
       ),
-      body: Center(
-        child: Container(
-          child: ElevatedButton(
-            child: Text("Go back ${this.movie?.director}"),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
+      body: ListView(
+        children: [MovieDetailsThumbnail(thumbnail: movie!.images[0])],
       ),
+      // body: Center(
+      //   child: Container(
+      //     child: ElevatedButton(
+      //       child: Text("Go back ${this.movie?.director}"),
+      //       onPressed: () {
+      //         Navigator.pop(context);
+      //       },
+      //     ),
+      //   ),
+      // ),
+    );
+  }
+}
+
+class MovieDetailsThumbnail extends StatelessWidget {
+  final String thumbnail;
+
+  const MovieDetailsThumbnail({Key? key, required this.thumbnail})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 190,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(thumbnail), fit: BoxFit.cover)),
+            ),
+            Icon(Icons.play_circle_outline, size: 100, color: Colors.white)
+          ],
+        ),
+        Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [Color(0x00f5f5f5), Color(0xfff5f5f5)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter)),
+          height: 80,
+        )
+      ],
     );
   }
 }
