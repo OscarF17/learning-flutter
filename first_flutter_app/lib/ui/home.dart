@@ -5,6 +5,8 @@ import 'package:first_flutter_app/utils/hexcolor.dart';
 import 'package:first_flutter_app/model/question.dart';
 import 'package:first_flutter_app/model/movie.dart';
 
+import 'movie_ui/movie_ui.dart';
+
 class MovieListView extends StatelessWidget {
   MovieListView({super.key});
 
@@ -186,7 +188,14 @@ class MovieListViewDetails extends StatelessWidget {
         backgroundColor: Colors.blueGrey.shade900,
       ),
       body: ListView(
-        children: [MovieDetailsThumbnail(thumbnail: movie!.images[0])],
+        children: [
+          MovieDetailsThumbnail(thumbnail: movie!.images[0]),
+          MovieDetailsHeaderWithPoster(movie: movie!),
+          HorizontalLine(),
+          MovieDetailsCast(movie: movie!),
+          HorizontalLine(),
+          MovieDetailsExtraPosters(posters: movie!.images)
+        ],
       ),
       // body: Center(
       //   child: Container(
@@ -198,42 +207,6 @@ class MovieListViewDetails extends StatelessWidget {
       //     ),
       //   ),
       // ),
-    );
-  }
-}
-
-class MovieDetailsThumbnail extends StatelessWidget {
-  final String thumbnail;
-
-  const MovieDetailsThumbnail({Key? key, required this.thumbnail})
-      : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 190,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(thumbnail), fit: BoxFit.cover)),
-            ),
-            Icon(Icons.play_circle_outline, size: 100, color: Colors.white)
-          ],
-        ),
-        Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Color(0x00f5f5f5), Color(0xfff5f5f5)],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter)),
-          height: 80,
-        )
-      ],
     );
   }
 }
