@@ -243,9 +243,9 @@ class _QuizAppState extends State<QuizApp> {
       appBar: AppBar(
         title: Text("True Citicen"),
         centerTitle: true,
-        backgroundColor: Colors.blueGrey,
+        //backgroundColor: Colors.blueGrey,
       ),
-      backgroundColor: Colors.blueGrey,
+      // backgroundColor: Colors.blueGrey,
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -272,7 +272,7 @@ class _QuizAppState extends State<QuizApp> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     questionBank[_currentQuestionIndex].questionText,
-                    style: TextStyle(fontSize: 16.9, color: Colors.white),
+                    //style: TextStyle(fontSize: 16.9, color: Colors.white),
                   ),
                 )),
               ),
